@@ -1,0 +1,53 @@
+Meeting 3/12/25
+- Sprint 2 To-Do
+	- 
+
+
+PerryDonahue@unopm.onmicrosoft.com
+
+
+The data must be random. I would like 10,000 rows for the year 2024, 2025, and 2026. So, 30,000 rows total. The columns, data types, value ranges for each column is below:
+
+Student_ID - numeric and value range of 100000 to 200000
+DOB - data (00/00/0000 in month, day, year) and a value range of years 2004-2008
+Age - Based on the DOB column, numeric
+Gender - string and value range of M or F
+Ethnicity - string and value range of American Indian or Alaska Native, Asian, Black or African American, Hispanic, Native Hawaiian or Other Pacific Islander, Two or More, White
+
+SchoolYear - numeric and value range of 2017-18, 2018-19, 2019-20, 2020-21, 2021-22, 2022-23, 2023-24, 2024-25, 2025-26, 2026-27
+Cohort - numeric and value range of 2023, 2024, 2025, and 2026
+Term - string and value range of S1, S2, and YR
+Grade - numeric and value range of 8,9,10,11,12
+SummerSchool - string and value range of Y and N
+School - string and value of Middle School for grade 8 and random between High School A, High School B, High School C
+Program.A - string and value range of either Y or N
+Program.B - string and value range of either Y or N 
+Program.C - string and value range of either Y or N 
+YoungAdult - string and value of only N
+Academy - string and value of N for Grades 8-10 and random Y and N for grades 11-12
+MPSyears - numeric and value range of 1-15
+Moves - numeric and value range of 1-10
+FreeAndReducedStatus - string and value range of random between FREE, REDUCED, FULL PAY
+ELL - string and value range of either Y or N
+ACP - string and value range of either Y or N
+SPED - string and value range of either Y or N
+Guidance - numeric and value range of 0-140
+Guid.Behavior - numeric and value range of 0-100
+Guid.Mental - numeric and value range of 0-26
+Guid.Academics - numeric and value range of 0-100
+Guid.College -  numeric and value range of 0-18
+Nurse - numeric and value range of 0-729
+Nurse.Med_Inhaler_Diabetic - numeric and value range of 0-694
+Credits_Attempted - numeric and value range of 0-100
+Credits_Completed - numeric and value range of 0-100
+NumberFours - numeric and value range of 0-8
+NumberFives - numeric and value range of 0-8
+RepeatedCourses - numeric and value range of 0-8
+gpa - numeric and value range of 0.0-4.0
+Expulsions - numeric and value range of 0-2
+Suspensions - numeric and value range of 0-7
+Majors - numeric and value range of 0-27
+Minors - numeric and value range of 0-3
+ExcusedAbs - numeric and value range of 0.00000-5.99999
+UnexcusedAbs - numeric and value range of 0.00000-5.99999
+Tardies -  
