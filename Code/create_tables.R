@@ -5,12 +5,10 @@ tryCatch({
 }, error=function(cond){message(paste("cannot change working directory"))
 })
 
-data <- read.csv("data_w_predictions.csv")
-current_school_year <- "2022-23"
-current_year <- data %>% filter (SchoolYear == current_school_year)
-write_csv(current_year, "current_year.csv")
+#Load in Data
+data <- read.csv("data_w_synthetic_no_pred.csv")
 
-
+#Transform Data for Predictions
 credit_data <- data %>%
   group_by(Student_ID) %>%
   slice_tail(n = 2) %>%
@@ -19,7 +17,6 @@ credit_data <- data %>%
   summarise(avg_credit_completion_ratio = mean(credit_ratio, na.rm = TRUE))
 
 quartiles <- quantile(credit_data$avg_credit_completion_ratio, probs = c(0.02, 0.05,0.15, .2), na.rm = TRUE)
-print(quartiles)
 credit_data <- credit_data %>%
   mutate(avg_credit_completion_ratio = case_when(
     is.na(avg_credit_completion_ratio) ~ "low", 
@@ -56,9 +53,8 @@ data <- data %>%
          
   )
 
-data_train <- data %>%
+model_input <- data %>%
   group_by(Student_ID) %>%
-  mutate(First_Graduated = first(Graduated)) %>%  # Capture the first 'Graduated' status per Student_ID
   summarise(SummerSchool_Y = sum(SummerSchool_Y),          # Sum up 'Y' in SummerSchool
             ProgramABC = sum(CountA + CountB + CountC),
             Academy = sum(countAcademy),
@@ -83,12 +79,29 @@ data_train <- data %>%
             English=mean(English),
             Math=mean(Math),
             Sci=mean(Sci),
-            SocialSciences=mean(SocialSciences),
-            Graduated = first(First_Graduated))   # Get the first 'Graduated' captured
+            SocialSciences=mean(SocialSciences))
 
-
-
-data_train <- data_train %>%
+#Note data_train was a name leftover from original development
+model_input <- model_input %>%
   left_join(credit_data, by = "Student_ID")
 
-write_csv(data_train, "model_input.csv")
+#Save the model input table
+write_csv(model_input, "model_input.csv")
+
+
+#Load the model
+library(bundle)
+bundled_model <- readRDS("best_model_fit.rds")
+rf_model <- unbundle(bundled_model)
+
+#Run predictions on the data
+data_w_predictions<-rf_model %>%
+  augment(model_input) %>%
+  rename(Prob_Graduated = .pred_Y, Prob_Not_Graduated = .pred_N) %>%
+  select(-.pred_class)
+
+write_csv(left_join(data, 
+                    data_w_predictions %>% select(Student_ID, Prob_Graduated, Prob_Not_Graduated),
+                    by="Student_ID"), "data_with_predictions.csv")
+
+
